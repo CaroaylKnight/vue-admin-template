@@ -36,6 +36,15 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+      '/api':{
+        target:'http://loaclhost:8001/',
+        changeOrigin: true,
+        pathRewrite:{
+          '^/api':'/'
+        }
+      }
+    },
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {
