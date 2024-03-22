@@ -95,7 +95,7 @@ import teacher from '@/api/edu/teacher'
 
 export default {
   data() {
-    return{
+    return {
       list: null,
       page: 1,
       limit: 10,
@@ -114,10 +114,10 @@ export default {
           // console.log(response)
           this.list = response.data.rows
           this.total = response.data.total
-        })//请求成功
+        }) //请求成功
         .catch(error => {
           console.log(error)
-        })//请求失败
+        }) //请求失败
     },
 
     resetData() { //清空的方法

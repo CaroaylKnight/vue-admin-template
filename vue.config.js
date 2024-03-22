@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
       '/api':{
-        target:'http://loaclhost:8001/',
+        target:'http://loaclhost:9001/',
         changeOrigin: true,
         pathRewrite:{
           '^/api':'/'

@@ -31,7 +31,7 @@ export default {
   //根据id查询讲师
   getTeacherInfo(id) {
     return request({
-      url:`eduteacher/teacher/getTeacher/${id}`,
+      url:`eduservice/teacher/getTeacher/${id}`,
       method: 'get'
     })
   },
@@ -39,7 +39,7 @@ export default {
   //修改讲师
   updateTeacher(teacher) {
     return request({
-      url:`eduteacher/teacher/updateTeacher`,
+      url:`eduservice/teacher/updateTeacher`,
       method: 'post',
       data:teacher
     })
