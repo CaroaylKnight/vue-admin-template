@@ -62,6 +62,7 @@
           message: '添加成功'
         })
         //跳转
+        this.$router.push({path: '/subject/list'})
 
       },
 

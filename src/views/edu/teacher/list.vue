@@ -139,7 +139,7 @@ export default {
               this.$message({
                 type: 'success',
                 message: '删除成功!'
-              });
+              })
               //回到列表页面
               this.getList()
           })
