@@ -9,5 +9,12 @@ export default {
       method: 'post',
       data: courseInfo
     })
+  },
+  //查询所有讲师
+  getListTeacher() {
+    return request({
+      url: `/eduservice/teacher/findAll`,
+      method: 'get'
+    })
   }
 }

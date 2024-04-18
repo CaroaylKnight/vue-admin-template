@@ -60,19 +60,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/teacher',
     name: '讲师管理',
-    meta: { title: '讲师管理', icon: 'el-icon-s-help' },
+    meta: { title: '讲师管理', icon: 'el-icon-s-custom' },
     children: [
       {
         path: 'list',
         name: '讲师列表',
         component: () => import('@/views/edu/teacher/list'),
-        meta: { title: '讲师列表', icon: 'table' }
+        meta: { title: '讲师列表', icon: 'el-icon-tickets' }
       },
       {
         path: 'save',
         name: '添加讲师',
         component: () => import('@/views/edu/teacher/save'),
-        meta: { title: '添加讲师', icon: 'tree' }
+        meta: { title: '添加讲师', icon: 'el-icon-circle-plus-outline' }
       },
       {
         path: 'edit/:id',
@@ -89,19 +89,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/subject/list',
     name: '课程分类管理',
-    meta: { title: '课程分类管理', icon: 'el-icon-s-help' },
+    meta: { title: '课程分类管理', icon: 'el-icon-s-grid' },
     children: [
       {
         path: 'list',
         name: '课程分类列表',
         component: () => import('@/views/edu/subject/list'),
-        meta: { title: '课程分类列表', icon: 'table' }
+        meta: { title: '课程分类列表', icon: 'tree' }
       },
       {
         path: 'save',
         name: '添加课程分类',
         component: () => import('@/views/edu/subject/save'),
-        meta: { title: '添加课程分类', icon: 'tree' }
+        meta: { title: '添加课程分类', icon: 'el-icon-upload2' }
       }
     ]
   },
@@ -111,19 +111,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/course/list',
     name: '课程管理',
-    meta: { title: '课程管理', icon: 'el-icon-s-help' },
+    meta: { title: '课程管理', icon: 'el-icon-s-order' },
     children: [
       {
         path: 'list',
         name: '课程列表',
         component: () => import('@/views/edu/course/list'),
-        meta: { title: '课程列表', icon: 'table' }
+        meta: { title: '课程列表', icon: 'el-icon-date' }
       },
       {
         path: 'info',
         name: '添加课程',
         component: () => import('@/views/edu/course/info'),
-        meta: { title: '添加课程', icon: 'tree' }
+        meta: { title: '添加课程', icon: 'el-icon-edit-outline' }
       },
       {
         path: 'info/:id',

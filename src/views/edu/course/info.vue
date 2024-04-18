@@ -15,8 +15,43 @@
       </el-form-item>
 
       <!-- 所属分类 TODO -->
+      <el-form-item label="课程分类">
+        <el-select
+          v-model="courseInfo.subjectParentId"
+          placeholder="一级分类" @change="subjectLevelOneChanged">
+          <el-option
+            v-for="subject in subjectOneList"
+            :key="subject.id"
+            :label="subject.title"
+            :value="subject.id"/>
+        </el-select>
+
+        <!-- 二级分类 -->
+        <el-select
+          v-model="courseInfo.subjectId"
+          placeholder="二级分类">
+          <el-option
+            v-for="subject in subjectTwoList"
+            :key="subject.id"
+            :label="subject.title"
+            :value="subject.id"/>
+        </el-select>
+
+      </el-form-item>
 
       <!-- 课程讲师 TODO -->
+      <!-- 课程讲师 -->
+      <el-form-item label="课程讲师">
+        <el-select
+          v-model="courseInfo.teacherId"
+          placeholder="请选择">
+          <el-option
+            v-for="teacher in teacherList"
+            :key="teacher.id"
+            :label="teacher.name"
+            :value="teacher.id"/>
+        </el-select>
+      </el-form-item>
 
       <el-form-item label="总课时">
         <el-input-number :min="0" v-model="courseInfo.lessonNum" controls-position="right" placeholder="请填写课程的总课时数"/>
@@ -28,6 +63,19 @@
       </el-form-item>
 
       <!-- 课程封面 TODO -->
+      <!-- 课程封面-->
+      <el-form-item label="课程封面">
+
+        <el-upload
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+          :action="BASE_API+'/admin/oss/file/upload?host=cover'"
+          class="avatar-uploader">
+          <img :src="courseInfo.cover">
+        </el-upload>
+
+      </el-form-item>
 
       <el-form-item label="课程价格">
         <el-input-number :min="0" v-model="courseInfo.price" controls-position="right" placeholder="免费课程请设置为0元"/> 元
@@ -42,25 +90,57 @@
 
 <script>
 import course from '@/api/edu/course'
+import subject from '@/api/edu/subject'
 export default {
   data() {
     return {
       saveBtnDisabled: false,
       courseInfo: {
         title: '',
-        subjectId: '',
+        subjectId: '', //二级分类id
+        subjectParentId: '',
         teacherId: '',
         lessonNum: 0,
         description: '',
         cover: '',
         price: 0
-      }
+      },
+      teacherList: [],
+      subjectOneList: [],
+      subjectTwoList: []
     }
   },
   created() {
-
+    this.getListTeacher()
+    this.getOneSubject()
   },
   methods: {
+    //点击某个一级分类，触发change，显示对应二级分类
+    subjectLevelOneChanged(value) {
+      for (let item in this.subjectOneList) {
+        let oneSubject = this.subjectOneList[item]
+        //判断所有一级分类id和点击一级分类id是否一致
+        if(value === oneSubject.id) {
+          //从一级分类获取里面所有的二级分类
+          this.subjectTwoList = oneSubject.children
+          this.courseInfo.subjectId = ''
+        }
+      }
+    },
+    //查询所有的一级分类
+    getOneSubject() {
+      subject.getSubjectList()
+        .then(response => {
+          this.subjectOneList = response.data.list
+        })
+    },
+    //查询所有讲师
+    getListTeacher() {
+      course.getListTeacher()
+        .then(response => {
+          this.teacherList = response.data.items
+        })
+    },
     saveOrUpdate() {
       course.addCourseInfo(this.courseInfo)
         .then(response => {
@@ -70,7 +150,7 @@ export default {
             message: '添加课程信息成功!'
           })
           //跳转
-          this.$router.push({path: '/course/chapter/1'})
+          this.$router.push({path: '/course/chapter/' + response.data.courseId})
         })
       
     }
