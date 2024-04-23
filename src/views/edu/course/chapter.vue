@@ -9,6 +9,18 @@
       <el-step title="最终发布"/>
     </el-steps>
 
+    <ul>
+      <li v-for="chapter in chapterVideoList" :key="chapter.id">
+        {{ chapter.title }}
+        <ul>
+          <li v-for="video in chapter.children" :key="video.id">
+            {{ video.title }}
+          </li>
+        </ul>
+        
+      </li>
+    </ul>
+
     <el-form label-width="120px">
 
       <el-form-item>
@@ -20,16 +32,31 @@
 </template>
 
 <script>
+import chapter from '@/api/edu/chapter'
 export default {
   data() {
     return {
-      saveBtnDisabled: false
+      saveBtnDisabled: false,
+      courseId: '',
+      chapterVideoList: []
     }
   },
   create() {
-
+    //获取路由里的id值
+    if (this.$route.params && this.$route.params.id) {
+      this.courseId = this.$route.params.id
+      this.getChapterVideo()
+    }
   },
   methods: {
+    //根据课程id获取章节和小节数据列表
+    getChapterVideo() {
+      chapter.getAllChapterVideo(this.courseId)
+        .then(response => {
+          console.log(response);
+          this.chapterVideoList = response.data.allChapterVideo
+        })
+    },
     previous() {
       this.$router.go(-1)
     },
